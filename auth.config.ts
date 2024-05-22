@@ -16,6 +16,10 @@ export const authConfig = {
         if (isOnLoginPage || isOnSignupPage) {
           return Response.redirect(new URL('/', nextUrl))
         }
+      } else {
+        if (!isOnLoginPage && !isOnSignupPage) {
+          return Response.redirect(new URL('/login', nextUrl))
+        }
       }
 
       return true

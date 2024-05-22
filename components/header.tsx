@@ -34,8 +34,9 @@ async function UserOrLogin() {
         </>
       ) : (
         <Link href="/new" rel="nofollow">
-          <IconNextChat className="size-6 mr-2 dark:hidden" inverted />
-          <IconNextChat className="hidden size-6 mr-2 dark:block" />
+          <span className="text-lg font-semibold hover:underline transition duration-300 ease-in-out">
+            ChatFeedback
+          </span>
         </Link>
       )}
       <div className="flex items-center">

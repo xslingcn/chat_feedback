@@ -45,7 +45,7 @@ export default function LoginForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder="demo@xsl.ing"
                 required
               />
             </div>
@@ -63,7 +63,7 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="123456"
                 required
                 minLength={6}
               />

@@ -229,7 +229,7 @@ export async function saveChatSQL(chat: Chat) {
       text: message.content,
       created_at: new Date().toISOString(),
       deleted: false,
-      model: message.role === 'assistant' ? 'gpt-3.5-turbo' : null,
+      model: message.role === 'assistant' ? 'gpt-4o-2024-05-13' : null,
       user_id: message.role === 'user' ? chat.userId : null
     }
 
