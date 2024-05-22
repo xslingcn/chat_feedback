@@ -24,10 +24,12 @@ export async function createUser(
       id: crypto.randomUUID(),
       email,
       password: hashedPassword,
-      salt
+      salt,
     }
 
     await kv.hmset(`user:${email}`, user)
+    const init_point = 5
+    await kv.set(`user:${user.id}:point`, init_point);
 
     return {
       type: 'success',

@@ -54,7 +54,7 @@ export function SidebarItem({ index, chat, children }: SidebarItemProps) {
       }}
     >
       <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
-        {chat.sharePath ? (
+        {/* {chat.sharePath ? (
           <Tooltip delayDuration={1000}>
             <TooltipTrigger
               tabIndex={-1}
@@ -64,9 +64,9 @@ export function SidebarItem({ index, chat, children }: SidebarItemProps) {
             </TooltipTrigger>
             <TooltipContent>This is a shared chat.</TooltipContent>
           </Tooltip>
-        ) : (
-          <IconMessage className="mr-2 mt-1 text-zinc-500" />
-        )}
+        ) : ( */}
+        <IconMessage className="mr-2 mt-1 text-zinc-500" />
+        {/* )} */}
       </div>
       <Link
         href={chat.path}

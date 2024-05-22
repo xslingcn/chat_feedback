@@ -69,3 +69,24 @@ export async function authenticate(
     }
   }
 }
+
+export async function getUserPoint(userId: string) {
+  try {
+    const point = await kv.get(`user:${userId}:point`);
+    return point;
+  } catch (error) {
+    return {
+      error: "Error getting user point"
+    }
+  }
+}
+
+export async function saveUserPoint(userId: string, point: number) {
+  try {
+    await kv.set(`user:${userId}:point`, point);
+  } catch (error) {
+    return {
+      error: "Error updating user point"
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { auth } from '@/auth'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
+  IconComputePoint,
   IconGitHub,
   IconNextChat,
   IconSeparator,
@@ -15,9 +16,13 @@ import { SidebarMobile } from './sidebar-mobile'
 import { SidebarToggle } from './sidebar-toggle'
 import { ChatHistory } from './chat-history'
 import { Session } from '@/lib/types'
+import useStore from '@/lib/hooks/use-compute-point-store'
+import { useEffect } from 'react'
+import { ComputePoint } from './ui/compute-point'
 
 async function UserOrLogin() {
   const session = (await auth()) as Session
+
   return (
     <>
       {session?.user ? (
@@ -36,7 +41,10 @@ async function UserOrLogin() {
       <div className="flex items-center">
         <IconSeparator className="size-6 text-muted-foreground/50" />
         {session?.user ? (
-          <UserMenu user={session.user} />
+          <div className="flex items-center">
+            <UserMenu user={session.user} />
+            <ComputePoint userId={session.user.id} />
+          </div>
         ) : (
           <Button variant="link" asChild className="-ml-2">
             <Link href="/login">Login</Link>
@@ -56,7 +64,7 @@ export function Header() {
         </React.Suspense>
       </div>
       <div className="flex items-center justify-end space-x-2">
-        <a
+        {/* <a
           target="_blank"
           href="https://github.com/vercel/nextjs-ai-chatbot/"
           rel="noopener noreferrer"
@@ -73,7 +81,7 @@ export function Header() {
           <IconVercel className="mr-2" />
           <span className="hidden sm:block">Deploy to Vercel</span>
           <span className="sm:hidden">Deploy</span>
-        </a>
+        </a> */}
       </div>
     </header>
   )

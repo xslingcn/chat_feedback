@@ -1,4 +1,4 @@
-import { nanoid } from '@/lib/utils'
+import { uuid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 import { AI } from '@/lib/chat/actions'
 import { auth } from '@/auth'
@@ -10,7 +10,7 @@ export const metadata = {
 }
 
 export default async function IndexPage() {
-  const id = nanoid()
+  const id = uuid()
   const session = (await auth()) as Session
   const missingKeys = await getMissingKeys()
 

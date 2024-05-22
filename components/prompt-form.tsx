@@ -5,7 +5,6 @@ import Textarea from 'react-textarea-autosize'
 
 import { useActions, useUIState } from 'ai/rsc'
 
-import { UserMessage } from './stocks/message'
 import { type AI } from '@/lib/chat/actions'
 import { Button } from '@/components/ui/button'
 import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
@@ -15,8 +14,10 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
-import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
+import { uuid } from '@/lib/utils'
+import { UserMessage } from './ui/message'
+import useStore from '@/lib/hooks/use-compute-point-store'
 
 export function PromptForm({
   input,
@@ -30,6 +31,10 @@ export function PromptForm({
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
+
+  const compute_point = useStore(state => state.compute_point)
+  const user_id = useStore(state => state.user_id)
+  const saveUserPoint = useStore(state => state.saveUserPoint)
 
   React.useEffect(() => {
     if (inputRef.current) {
@@ -56,7 +61,7 @@ export function PromptForm({
         setMessages(currentMessages => [
           ...currentMessages,
           {
-            id: nanoid(),
+            id: uuid(),
             display: <UserMessage>{value}</UserMessage>
           }
         ])
@@ -64,6 +69,7 @@ export function PromptForm({
         // Submit and get response message
         const responseMessage = await submitUserMessage(value)
         setMessages(currentMessages => [...currentMessages, responseMessage])
+        saveUserPoint(user_id, compute_point - 1)
       }}
     >
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">

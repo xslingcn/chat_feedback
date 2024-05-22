@@ -11,14 +11,26 @@ export interface Chat extends Record<string, any> {
   userId: string
   path: string
   messages: Message[]
-  sharePath?: string
+}
+
+export interface Feedback {
+  instruction: boolean | null;
+  helpful: boolean | null;
+  factual: boolean | null;
+  style: boolean | null;
+  sensitive: boolean | null;
+  toxic: boolean | null;
+}
+
+export interface Quality extends Feedback {
+  item_id: string;
 }
 
 export type ServerActionResult<Result> = Promise<
   | Result
   | {
-      error: string
-    }
+    error: string
+  }
 >
 
 export interface Session {

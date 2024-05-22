@@ -104,6 +104,70 @@ function IconOpenAI({ className, ...props }: React.ComponentProps<'svg'>) {
   )
 }
 
+function IconAssistant({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-robot"
+      viewBox="0 0 16 16"
+    >
+      <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135" />
+      <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5" />
+    </svg>
+  )
+}
+
+function IconFeedback({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20px"
+      viewBox="0 -960 960 960"
+      width="20px"
+      fill="#CCCCCC"
+    >
+      <path d="M240-384h113l209-209q7-7.17 10.5-16.32 3.5-9.16 3.5-17.92 0-8.76-3.89-17.16T562-660l-45-45q-6-7-14.8-11t-18.4-4q-8.8 0-18.14 3.5Q456.31-713 449-706L240-496v112Zm288-243-45-45 45 45ZM288-432v-45l130-129 21 21 23 24-129 129h-45Zm151-153 23 24-44-45 21 21Zm-19 201h300v-72H492l-72 72ZM96-96v-696q0-29.7 21.15-50.85Q138.3-864 168-864h624q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H240L96-96Zm114-216h582v-480H168v522l42-42Zm-42 0v-480 480Z" />
+    </svg>
+  )
+}
+
+function IconFeedbackSelected({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20px"
+      viewBox="0 -960 960 960"
+      width="20px"
+      fill="#000000"
+    >
+      <path d="M240-384h113l209-209q7-7.17 10.5-16.32 3.5-9.16 3.5-17.92 0-8.76-3.89-17.16T562-660l-45-45q-6-7-14.8-11t-18.4-4q-8.8 0-18.14 3.5Q456.31-713 449-706L240-496v112Zm288-243-45-45 45 45ZM288-432v-45l130-129 21 21 23 24-129 129h-45Zm151-153 23 24-44-45 21 21Zm-19 201h300v-72H492l-72 72ZM96-96v-696q0-29.7 21.15-50.85Q138.3-864 168-864h624q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H240L96-96Zm114-216h582v-480H168v522l42-42Zm-42 0v-480 480Z" />
+    </svg>
+  )
+}
+
+function IconComputePoint({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20px"
+      viewBox="0 -960 960 960"
+      width="20px"
+      fill="#CCCCCC"
+    >
+      <path d="m451-165 195-384H512v-246L317-413h134v248Zm29 85q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm-.24 316Q611-164 703.5-256.26t92.5-223.5Q796-611 703.74-703.5T480.24-796Q349-796 256.5-703.74T164-480.24Q164-349 256.26-256.5t223.5 92.5Z" />
+    </svg>
+  )
+}
+
 function IconVercel({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
@@ -480,6 +544,10 @@ export {
   IconEdit,
   IconNextChat,
   IconOpenAI,
+  IconAssistant,
+  IconFeedback,
+  IconFeedbackSelected,
+  IconComputePoint,
   IconVercel,
   IconGitHub,
   IconSeparator,

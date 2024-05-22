@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
-import { getChat, getMissingKeys } from '@/app/actions'
+import { getChat, getChatSQL, getMissingKeys } from '@/app/actions'
 import { Chat } from '@/components/chat'
 import { AI } from '@/lib/chat/actions'
 import { Session } from '@/lib/types'
@@ -22,7 +22,7 @@ export async function generateMetadata({
     return {}
   }
 
-  const chat = await getChat(params.id, session.user.id)
+  const chat = await getChatSQL(params.id, session.user.id)
   return {
     title: chat?.title.toString().slice(0, 50) ?? 'Chat'
   }
@@ -37,7 +37,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   }
 
   const userId = session.user.id as string
-  const chat = await getChat(params.id, userId)
+  const chat = await getChatSQL(params.id, userId)
 
   if (!chat) {
     redirect('/')
