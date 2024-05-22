@@ -26,6 +26,13 @@ export interface Quality extends Feedback {
   item_id: string;
 }
 
+export interface CardData {
+  totalChats: number
+  qualities: number
+  suggestions: number
+  feedbackByYou: number
+}
+
 export type ServerActionResult<Result> = Promise<
   | Result
   | {

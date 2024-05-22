@@ -1,6 +1,11 @@
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
+import { CardData } from '@/lib/types'
 
-export default function Stats({ data }) {
+export interface StatsProps {
+  data: CardData
+}
+
+export default function Stats({ data }: StatsProps) {
   return (
     <main className="flex flex-col gap-6 p-6 md:p-10">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">

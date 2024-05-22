@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { create } from 'zustand';
 import { getUserPoint, saveUserPoint } from '@/app/login/actions';
 

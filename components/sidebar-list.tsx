@@ -1,6 +1,7 @@
 import { getChats, getChatsSQL } from '@/app/actions'
 import { SidebarItems } from '@/components/sidebar-items'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { Chat } from '@/lib/types'
 import { cache } from 'react'
 
 interface SidebarListProps {
@@ -18,9 +19,11 @@ export async function SidebarList({ userId }: SidebarListProps) {
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
       <div className="flex-1 overflow-auto">
-        {chats?.length ? (
+        {chats?.filter(chat => chat !== null).length ? (
           <div className="space-y-2 px-2">
-            <SidebarItems chats={chats} />
+            <SidebarItems
+              chats={chats.filter(chat => chat !== null) as Chat[]}
+            />
           </div>
         ) : (
           <div className="p-8 text-center">

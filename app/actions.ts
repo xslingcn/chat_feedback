@@ -6,7 +6,7 @@ import { kv } from '@vercel/kv'
 import { sql } from '@vercel/postgres'
 
 import { auth } from '@/auth'
-import { Quality, type Chat } from '@/lib/types'
+import { CardData, Quality, type Chat } from '@/lib/types'
 import { CoreAssistantMessage, CoreUserMessage } from 'ai'
 
 export async function getChats(userId?: string | null) {
@@ -296,12 +296,13 @@ export async function getCardData() {
     (SELECT COUNT(*) FROM suggestions WHERE user_id = ${user_id}) +
     (SELECT COUNT(*) FROM qualities WHERE user_id = ${user_id}) AS total_count`
 
-    return {
+    const data: CardData = {
       totalChats: totalChats.rows[0].distinct_chat_id_count,
       qualities: qualities.rows[0].total_count,
       suggestions: suggestions.rows[0].total_count,
       feedbackByYou: feedbackByYou.rows[0].total_count
     }
+    return data
   } catch (error) {
     return {
       error: 'Database Error: Failed to Get Card Data.'

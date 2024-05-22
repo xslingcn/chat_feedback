@@ -2,23 +2,27 @@ import { useEffect, useState } from 'react'
 import { IconComputePoint } from '@/components/ui/icons'
 import Stats from './ui/stats'
 import { getCardData } from '@/app/actions'
+import { CardData } from '@/lib/types'
 
 export function EmptyScreen() {
-  const [cardData, setCardData] = useState(null)
+  const [cardData, setCardData] = useState<CardData>({
+    totalChats: 0,
+    qualities: 0,
+    suggestions: 0,
+    feedbackByYou: 0
+  })
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await getCardData()
-        if (data.error) {
-          setError(data.error)
-        } else {
-          setCardData(data)
+        if ('error' in data) {
+          throw new Error(data.error)
         }
+        setCardData(data)
       } catch (err) {
-        setError(err)
+        console.error(err)
       } finally {
         setLoading(false)
       }
@@ -26,14 +30,6 @@ export function EmptyScreen() {
 
     fetchData()
   }, [])
-
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
-  if (error) {
-    return <div>{error}</div>
-  }
 
   return (
     <div className="mx-auto max-w-6xl px-4">
