@@ -321,6 +321,43 @@ export async function getAnnotatedIDs(chatId: string, messages: Message[]) {
   }
 }
 
+export async function getRandomChat() {
+  try {
+    const session = await auth()
+
+    if (!session || !session.user || !session.user.id) {
+      return {
+        error: 'Unauthorized'
+      }
+    }
+
+    const item = await sql`
+      SELECT *
+      FROM items
+      WHERE model IS NOT NULL
+        AND id NOT IN (
+          SELECT item_id
+          FROM qualities
+          WHERE user_id = '5f551270-968f-4669-8065-f9c72ea6613b'
+        )
+      LIMIT 1;
+    `;
+    if (item.rows.length === 0) {
+      return {
+        failure: 'No more chats to annotate.'
+      }
+    }
+    return {
+      success: item.rows[0].chat_id
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error: 'Database Error: Failed to Get Available Chat to Annotate.'
+    }
+  }
+}
+
 export async function getPublicCardData() {
   try {
     const totalChats =

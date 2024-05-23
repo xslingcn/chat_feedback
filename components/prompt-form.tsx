@@ -79,7 +79,7 @@ export function PromptForm({
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span>You don't have enough</span>
+              <span>You don&apos;t have enough</span>
               <span>
                 <IconComputePoint className="size-6" />
               </span>
