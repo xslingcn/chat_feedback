@@ -277,32 +277,35 @@ export async function saveQuality(quality: Quality) {
   }
 }
 
-export async function getCardData() {
-  const session = await auth()
-
-  if (!session || !session.user || !session.user.id) {
-    return {
-      error: 'Unauthorized'
-    }
-  }
-  const user_id = session.user.id
-
+export async function getPublicCardData() {
   try {
     const totalChats =
-      await sql`SELECT COUNT(DISTINCT chat_id) AS distinct_chat_id_count FROM items WHERE deleted = false;`
+      await sql`SELECT COUNT(DISTINCT id) AS distinct_chat_count FROM items WHERE deleted = false;`
     const qualities = await sql`SELECT COUNT(*) AS total_count FROM qualities;`
-    const suggestions = await sql`SELECT COUNT(*) AS total_count FROM suggestions;`
-    const feedbackByYou = await sql`SELECT
-    (SELECT COUNT(*) FROM suggestions WHERE user_id = ${user_id}) +
-    (SELECT COUNT(*) FROM qualities WHERE user_id = ${user_id}) AS total_count`
+    const suggestions =
+      await sql`SELECT COUNT(*) AS total_count FROM suggestions;`
 
     const data: CardData = {
-      totalChats: totalChats.rows[0].distinct_chat_id_count,
+      totalChats: totalChats.rows[0].distinct_chat_count,
       qualities: qualities.rows[0].total_count,
       suggestions: suggestions.rows[0].total_count,
-      feedbackByYou: feedbackByYou.rows[0].total_count
+      feedbackByYou: null
     }
     return data
+  } catch (error) {
+    return {
+      error: 'Database Error: Failed to Get Card Data.'
+    }
+  }
+}
+
+export async function getFeedbackByYou(userId: string) {
+  try {
+    const feedbackByYou = await sql`SELECT
+    (SELECT COUNT(*) FROM suggestions WHERE user_id = ${userId}) +
+    (SELECT COUNT(*) FROM qualities WHERE user_id = ${userId}) AS total_count`
+
+    return feedbackByYou?.rows[0]?.total_count
   } catch (error) {
     return {
       error: 'Database Error: Failed to Get Card Data.'

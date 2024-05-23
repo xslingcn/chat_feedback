@@ -11,6 +11,7 @@ import { Message, Session } from '@/lib/types'
 import { usePathname, useRouter } from 'next/navigation'
 import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
+import PromptLoginPanel from './prompt-login-panel'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -68,17 +69,21 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
         {messages.length ? (
           <ChatList messages={messages} isShared={false} session={session} />
         ) : (
-          <EmptyScreen />
+          <EmptyScreen session={session} />
         )}
         <div className="w-full h-px" ref={visibilityRef} />
       </div>
-      <ChatPanel
-        id={id}
-        input={input}
-        setInput={setInput}
-        isAtBottom={isAtBottom}
-        scrollToBottom={scrollToBottom}
-      />
+      {session?.user ? (
+        <ChatPanel
+          id={id}
+          input={input}
+          setInput={setInput}
+          isAtBottom={isAtBottom}
+          scrollToBottom={scrollToBottom}
+        />
+      ) : (
+        <PromptLoginPanel />
+      )}
     </div>
   )
 }

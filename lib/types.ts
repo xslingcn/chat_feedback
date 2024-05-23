@@ -14,13 +14,15 @@ export interface Chat extends Record<string, any> {
 }
 
 export interface Feedback {
-  instruction: boolean | null;
-  helpful: boolean | null;
-  factual: boolean | null;
-  style: boolean | null;
-  sensitive: boolean | null;
-  toxic: boolean | null;
+  instruction: boolean | '';
+  helpful: boolean | '';
+  factual: boolean | '';
+  style: boolean | '';
+  sensitive: boolean | '';
+  toxic: boolean | '';
 }
+export type FeedbackKey = 'instruction' | 'helpful' | 'factual' | 'style' | 'sensitive' | 'toxic';
+
 
 export interface Quality extends Feedback {
   item_id: string;
@@ -30,7 +32,7 @@ export interface CardData {
   totalChats: number
   qualities: number
   suggestions: number
-  feedbackByYou: number
+  feedbackByYou: number | null
 }
 
 export type ServerActionResult<Result> = Promise<

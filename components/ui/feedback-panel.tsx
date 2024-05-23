@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,7 +10,7 @@ import {
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { RadioGroupItem, RadioGroup } from '@/components/ui/radio-group'
-import { Feedback } from '@/lib/types'
+import { Feedback, FeedbackKey } from '@/lib/types'
 
 export default function FeedbackPanel({
   onSubmit
@@ -19,12 +18,12 @@ export default function FeedbackPanel({
   onSubmit: (feedback: Feedback) => void
 }) {
   const [feedback, setFeedback] = useState<Feedback>({
-    instruction: null,
-    helpful: null,
-    factual: null,
-    style: null,
-    sensitive: null,
-    toxic: null
+    instruction: '',
+    helpful: '',
+    factual: '',
+    style: '',
+    sensitive: '',
+    toxic: ''
   })
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true)
 
@@ -90,9 +89,11 @@ export default function FeedbackPanel({
               <Label htmlFor={id}>{label}</Label>
               <RadioGroup
                 className="flex items-center gap-2"
-                value={feedback[id] === null ? '' : feedback[id].toString()}
+                value={feedback[id as FeedbackKey].toString()}
                 id={id}
-                onValueChange={value => handleFeedbackChange(id, value)}
+                onValueChange={value =>
+                  handleFeedbackChange(id as FeedbackKey, value)
+                }
               >
                 <Label
                   className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-primary [&:has(:checked)]:text-primary-foreground"

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { create } from 'zustand';
 import { getUserPoint, saveUserPoint } from '@/app/login/actions';
 
@@ -14,7 +13,12 @@ const useStore = create<UserPointState>((set) => ({
     compute_point: 5,
     init: async (userId) => {
         const point = await getUserPoint(userId)
-        set({ user_id: userId, compute_point: point });
+        if (typeof point === 'number') {
+            set({ user_id: userId, compute_point: point });
+        }
+        else if (point.error) {
+            console.error(point.error);
+        }
     },
     saveUserPoint: async (userId, point) => {
         await saveUserPoint(userId, point)

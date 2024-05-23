@@ -6,6 +6,7 @@ import { AuthError } from 'next-auth'
 import { z } from 'zod'
 import { kv } from '@vercel/kv'
 import { ResultCode } from '@/lib/utils'
+import { redirect } from 'next/navigation'
 
 export async function getUser(email: string) {
   const user = await kv.hgetall<User>(`user:${email}`)
@@ -72,7 +73,7 @@ export async function authenticate(
 
 export async function getUserPoint(userId: string) {
   try {
-    const point = await kv.get(`user:${userId}:point`);
+    const point = await kv.get(`user:${userId}:point`) as number;
     return point;
   } catch (error) {
     return {
@@ -89,4 +90,8 @@ export async function saveUserPoint(userId: string, point: number) {
       error: "Error updating user point"
     }
   }
+}
+
+export async function redirectToLogin() {
+  redirect('/login')
 }
