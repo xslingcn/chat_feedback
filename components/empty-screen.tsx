@@ -27,13 +27,6 @@ export function EmptyScreen({ session }: EmptyScreenProps) {
           <li className="flex items-start mb-2">
             <input type="checkbox" className="mr-2 mt-1" disabled />
             <span>
-              Pooling Chatlogs: Merging chatlogs and random distribute them for
-              annotation
-            </span>
-          </li>
-          <li className="flex items-start mb-2">
-            <input type="checkbox" className="mr-2 mt-1" disabled />
-            <span>
               Constructed Responses: Allowing users to suggest a manually
               created response.
             </span>
