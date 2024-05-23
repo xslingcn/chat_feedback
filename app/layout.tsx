@@ -16,12 +16,7 @@ export const metadata = {
     default: 'ChatFeedback',
     template: `%s - ChatFeedback`
   },
-  description: 'Crowdsourced synthetic data collection with human feedback.',
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png'
-  }
+  description: 'Crowdsourced synthetic data collection with human feedback.'
 }
 
 export const viewport = {

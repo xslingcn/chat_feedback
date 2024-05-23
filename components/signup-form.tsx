@@ -19,7 +19,7 @@ export default function SignupForm() {
         toast.error(getMessageFromCode(result.resultCode))
       } else {
         toast.success(getMessageFromCode(result.resultCode))
-        router.refresh()
+        router.push('/')
       }
     }
   }, [result, router])
@@ -45,7 +45,7 @@ export default function SignupForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder="Just type anything (a@b.com)"
                 required
               />
             </div>
@@ -63,7 +63,7 @@ export default function SignupForm() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="It will take it"
                 required
                 minLength={6}
               />

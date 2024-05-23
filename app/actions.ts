@@ -49,7 +49,6 @@ export async function getChatsSQL(userId?: string | null) {
     const results = await Promise.all(chatDetailsPromises)
     const fulfilled = results.filter(result => result !== null)
 
-    console.log('fulfilled', fulfilled.length)
     return fulfilled
   } catch (error) {
     return []

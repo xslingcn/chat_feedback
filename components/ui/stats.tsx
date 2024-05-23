@@ -50,7 +50,6 @@ export default function Stats({ session }: StatsProps) {
       fetchFeedbackByYou(session.user.id)
     }
   }, [session])
-  console.log(session)
 
   return (
     <main className="flex flex-col gap-6 p-6 md:p-10">
