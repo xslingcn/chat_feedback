@@ -7,7 +7,11 @@ import { useActions, useUIState } from 'ai/rsc'
 
 import { type AI } from '@/lib/chat/actions'
 import { Button } from '@/components/ui/button'
-import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
+import {
+  IconArrowElbow,
+  IconComputePoint,
+  IconPlus
+} from '@/components/ui/icons'
 import {
   Tooltip,
   TooltipContent,
@@ -18,6 +22,8 @@ import { useRouter } from 'next/navigation'
 import { uuid } from '@/lib/utils'
 import { UserMessage } from './ui/message'
 import useStore from '@/lib/hooks/use-compute-point-store'
+import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 export function PromptForm({
   input,
@@ -28,25 +34,59 @@ export function PromptForm({
 }) {
   const router = useRouter()
   const { formRef, onKeyDown } = useEnterSubmit()
-  const inputRef = React.useRef<HTMLTextAreaElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
+  const [sufficientPoint, setSufficientPoint] = useState(false)
 
   const compute_point = useStore(state => state.compute_point)
   const user_id = useStore(state => state.user_id)
   const saveUserPoint = useStore(state => state.saveUserPoint)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [])
+
+  useEffect(() => {
+    if (compute_point > 0) {
+      setSufficientPoint(true)
+    } else {
+      setSufficientPoint(false)
+    }
+  }, [compute_point])
 
   return (
     <form
       ref={formRef}
       onSubmit={async (e: any) => {
         e.preventDefault()
+
+        if (!sufficientPoint) {
+          toast.error(
+            <div className="flex items-center space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                height="20"
+                width="20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span>You don't have enough</span>
+              <span>
+                <IconComputePoint className="size-6" />
+              </span>
+            </div>
+          )
+          return
+        }
 
         // Blur focus on mobile
         if (window.innerWidth < 600) {

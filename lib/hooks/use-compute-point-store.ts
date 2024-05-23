@@ -16,6 +16,9 @@ const useStore = create<UserPointState>((set) => ({
         if (typeof point === 'number') {
             set({ user_id: userId, compute_point: point });
         }
+        else if (!point) {
+            console.error('Failed to fetch user point');
+        }
         else if (point.error) {
             console.error(point.error);
         }
