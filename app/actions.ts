@@ -6,7 +6,7 @@ import { kv } from '@vercel/kv'
 import { sql } from '@vercel/postgres'
 
 import { auth } from '@/auth'
-import { CardData, Quality, type Chat } from '@/lib/types'
+import { CardData, Message, Quality, type Chat } from '@/lib/types'
 import { CoreAssistantMessage, CoreUserMessage } from 'ai'
 
 export async function getChats(userId?: string | null) {
@@ -264,14 +264,59 @@ export async function saveQuality(quality: Quality) {
   }
   const user_id = session.user.id
   try {
-    // Save chat items to SQL
+
+    const res = await sql`
+      SELECT EXISTS (
+        SELECT 1
+        FROM qualities
+        WHERE user_id = ${session.user.id} AND item_id = ${quality.item_id}
+    );
+    `
+    if (res.rows[0].exists) {
+      return {
+        failure: 'You already submitted feedback for this message.'
+      }
+    }
+
+    // Save quality to SQL
     await sql`
         INSERT INTO qualities (item_id, instruction, helpful, factual, style, sensitive, toxic, user_id)
         VALUES (${quality.item_id}, ${quality.instruction}, ${quality.helpful}, ${quality.factual}, ${quality.style}, ${quality.sensitive}, ${quality.toxic}, ${user_id});
       `
+
+    return {
+      success: 'Feedback submitted.'
+    }
   } catch (error) {
     return {
       error: 'Database Error: Failed to Save Quality.'
+    }
+  }
+}
+
+export async function getAnnotatedIDs(chatId: string, messages: Message[]) {
+  try {
+    const session = await auth()
+
+    if (!session || !session.user || !session.user.id) {
+      return {
+        error: 'Unauthorized'
+      }
+    }
+
+    const items = await sql`
+      SELECT * FROM qualities WHERE user_id = ${session.user.id};
+    `
+
+    const messageIds = messages.map(message => message.id);
+    const annotated = items.rows.filter(item => messageIds.includes(item.item_id));
+    const annotatedIds = annotated.map(item => item.item_id);
+
+    return annotatedIds;
+  } catch (error) {
+
+    return {
+      error: 'Database Error: Failed to Get Annotated Item.'
     }
   }
 }

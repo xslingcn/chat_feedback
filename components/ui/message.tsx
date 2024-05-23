@@ -57,10 +57,14 @@ export function BotMessage({
       item_id: item_id
     }
     const result = await saveQuality(quality)
-    if (!result?.error) {
+    if (result?.success) {
       setSelected(false)
-      toast.success('Feedback submitted')
+      toast.success(result.success)
       saveUserPoint(user_id, compute_point + 1)
+    } else if (result?.failure) {
+      toast.error(result.failure)
+    } else if (result?.error) {
+      console.error(result.error)
     }
   }
 
